@@ -1,0 +1,65 @@
+{
+  "directories": [
+    {
+      "name": "node1",
+      "isDirectory": true,
+      "nodes": {
+        "directories": [],
+        "numFiles": 2
+      }
+    },
+    {
+      "name": "node2",
+      "isDirectory": true,
+      "nodes": {
+        "directories": [
+          {
+            "name": "node3",
+            "isDirectory": true,
+            "nodes": {
+              "directories": [],
+              "numFiles": 0
+            }
+          }
+        ],
+        "numFiles": 0
+      }
+    },
+    {
+      "name": "test",
+      "isDirectory": true,
+      "nodes": {
+        "directories": [
+          {
+            "name": "amor",
+            "isDirectory": true,
+            "nodes": {
+              "directories": [
+                {
+                  "name": "tes1",
+                  "isDirectory": true,
+                  "nodes": {
+                    "directories": [
+                      {
+                        "name": "test2",
+                        "isDirectory": true,
+                        "nodes": {
+                          "directories": [],
+                          "numFiles": 2
+                        }
+                      }
+                    ],
+                    "numFiles": 0
+                  }
+                }
+              ],
+              "numFiles": 0
+            }
+          }
+        ],
+        "numFiles": 0
+      }
+    }
+  ],
+  "numFiles": 0
+}
