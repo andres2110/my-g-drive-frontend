@@ -2,7 +2,7 @@
 import React from "react";
 
 export default function Node({ name, numFiles, numDirs, path }) {
-  const [isSelected, setSelected] = React.useState(true);
+  const [isSelected, setSelected] = React.useState(false);
   const fnHandleClick = () => {
     console.log(path);
     setSelected(!isSelected);

@@ -2,6 +2,7 @@
 import Tree from "./components/Tree";
 import React from "react";
 import { directories } from "./mocks/files.json";
+import FileForm from "./components/FileForm";
 
 export default function Home() {
   return (
@@ -13,9 +14,7 @@ export default function Home() {
         </div>
       </section>
       <Tree directories={directories} />
-      <section className="bg-[#D9D9D9] w-50 h-15 mt-4 justify-center items-center flex">
-        <p className="text-black"> Select Files x </p>
-      </section>
+      <FileForm/>
       <section className="bg-[#3F3838] w-45 h-36 mt-4 justify-center items-center flex rounded-full">
         <p className="text-white"> Grafico del espacio </p>
       </section>
