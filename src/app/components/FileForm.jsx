@@ -2,22 +2,32 @@ import React from "react";
 import { UPLOAD_API } from "../constants";
 
 export default function FileForm() {
-  const [files, setFiles] = React.useState({});
+  const [files, setFiles] = React.useState(null);
 
   const fnUpload = async () => {
-    //console.log(files);
+    console.log(files);
+    if (files === null || files.length === 0) return; //TODO: Message Error
     let oFormData = new FormData();
-    // let aFiles = files;
-    oFormData.append("filename","test");
-    oFormData.append("path","test");
+    oFormData.append("filename", "test");
+    oFormData.append("path", "test");
     for (let oFile of files) {
       oFormData.append("files_up", oFile);
     }
-    const oResponse = await fetch(UPLOAD_API,{
-        method:'POST',
-        body: oFormData
-    });
-    
+    try {
+      const oResponse = await fetch(UPLOAD_API, {
+        method: "POST",
+        body: oFormData,
+      });
+      if (oResponse.status === 200) {
+        alert("Upload with success");
+      }
+      if (oResponse.status === 500) {
+        alert(oResponse.statusText);
+      }
+      if (oResponse.status !== 200 && oResponse.status !== 500) alert("The server not response");
+    } catch (error) {
+      alert("The server not response");
+    }
   };
   const fnUpdateFiles = (oEvent) => {
     setFiles(oEvent.target.files);
