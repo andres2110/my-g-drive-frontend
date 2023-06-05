@@ -5,7 +5,6 @@ export default function FileForm() {
   const [files, setFiles] = React.useState(null);
 
   const fnUpload = async () => {
-    console.log(files);
     if (files === null || files.length === 0) return; //TODO: Message Error
     let oFormData = new FormData();
     oFormData.append("filename", "test");

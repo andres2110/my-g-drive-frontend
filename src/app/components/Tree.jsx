@@ -1,33 +1,26 @@
 import React from "react";
-import Node from "./Node";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import { usePath } from "../hooks/usePath";
+import TreeNodes from "./TreeNodes";
+import { useDirs } from "../hooks/useDirs";
 
-export default function Tree({ directories }) {
-  let aNodesDirs = directories.map((node) => {
-    let aNodesDir = node.nodes.directories;
-    let iNumFiles = node.nodes.numFiles;
-    aNodesDir = aNodesDir.map((nodeS) => {
-      let aNodes = nodeS.nodes.directories;
-      let iNumFiles = nodeS.nodes.numFiles;
-      let sPath = `${node.name}/${nodeS.name}`;
-      return <Node name={nodeS.name} numFiles={iNumFiles} numDirs={aNodes.length} path={sPath} key={sPath} />;
+export default function Tree() {
+  const { path } = usePath();
+  const { state, fnDispatch } = useDirs();
+  const { dirs: aDirectories, selectedId: sSelected } = state;
+  const fnAddDir = () => {
+    fnDispatch({
+      type: "inserted",
+      path: path,
     });
-    return (
-      <div className="flex flex-col">
-        <Node name={node.name} numFiles={iNumFiles} numDirs={aNodesDir.length} path={`/${node.name}`} />
-        {aNodesDir.length ? (
-          <div className="flex flex-col gap-3 ml-5 pl-2 mt-5 border-l-[#D9D9D9] border-l-[1px]">
-            {aNodesDir}
-          </div>
-        ) : (
-          <></>
-        )}
-      </div>
-    );
-  });
+  };
   return (
-    <section className="bg-[#3F3838] w-10/12 h-1/2 p-5 flex rounded-sm md:w-1/2 overflow-y-auto">
-      <div className="flex flex-col gap-5">{aNodesDirs} </div>
-      {/* <div className="bg-red-400 w-1/3 h-1/3"></div> */}
+    <section className="bg-[#3F3838] w-10/12 h-1/2 p-5 flex rounded-sm md:w-1/2 overflow-y-auto relative">
+      <TreeNodes directories={aDirectories} selectedId={sSelected} />
+      <div className=" w-1/5 h-1/5 absolute bottom-0 end-0 flex items-end justify-end p-3">
+        <FontAwesomeIcon icon={faCirclePlus} size="2xl" color="#58DE66" onClick={fnAddDir} />
+      </div>
     </section>
   );
 }

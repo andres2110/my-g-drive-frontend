@@ -1,29 +1,45 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import { usePath } from "../hooks/usePath";
+import { useDirs } from "../hooks/useDirs";
+import { COLORS } from "../constants";
+import NodeInsert from "./NodeInsert";
 
-export default function Node({ name, numFiles, numDirs, path }) {
-  const [isSelected, setSelected] = React.useState(false);
+export default function Node({ name, numFiles, numDirs, path, mode, selected, id }) {
   const { fnChangePath } = usePath();
+  const { fnDispatch } = useDirs();
+  const oColors = COLORS;
   const fnHandleClick = () => {
-    let sPath = isSelected ? "" : path; // Si es true va ser false
-    fnChangePath(setSelected,sPath);
-    setSelected(!isSelected);
+    fnChangePath(path);
+    fnDispatch({
+      type: "selected",
+      id: id,
+    });
   };
-  const fnHandleDoubleClick = () => {
-    console.log(isSelected);
-  };
-  // const sColor = isSelected ? "#9CD1CE" : "#D9D9D9"; -> Investigar por que no funciona
-  const sDivClass = isSelected ? "bg-[#9CD1CE] w-6 h-6" : "bg-[#D9D9D9] w-6 h-6";
+  let sMode = selected ? "selected" : mode;
+  let sDivClass = oColors[sMode];
+  let bDisplay = mode === "display";
   return (
     <div className="flex flex-col">
       <div className="flex gap-2 items-center">
-        <div className={sDivClass} onClick={fnHandleClick} onDoubleClick={fnHandleDoubleClick}></div>
-        <h5 className="text-white"> {name} </h5>
-        <small className="bg-[#D9D9D9] text-black rounded-md px-1 text-xs">
-          Files: {numFiles} Dirs: {numDirs}
-        </small>
+        <div className={sDivClass} onClick={fnHandleClick}></div>
+        {bDisplay ? (
+          <NodeDisplay numDirs={numDirs} numFiles={numFiles} name={name} />
+        ) : (
+          <NodeInsert name={name} id={id} />
+        )}
       </div>
     </div>
   );
 }
+
+const NodeDisplay = ({ numFiles, numDirs, name }) => {
+  return (
+    <>
+      <h5 className="text-white"> {name} </h5>
+      <small className="bg-[#D9D9D9] text-black rounded-md px-1 text-xs">
+        Files: {numFiles} Dirs: {numDirs}
+      </small>
+    </>
+  );
+};

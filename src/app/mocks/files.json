@@ -1,15 +1,7 @@
 {
   "directories": [
     {
-      "name": "node1",
-      "isDirectory": true,
-      "nodes": {
-        "directories": [],
-        "numFiles": 2
-      }
-    },
-    {
-      "name": "node2",
+      "name": "Lista",
       "isDirectory": true,
       "nodes": {
         "directories": [
@@ -18,48 +10,48 @@
             "isDirectory": true,
             "nodes": {
               "directories": [],
-              "numFiles": 0
-            }
+              "numFiles": 1
+            },
+            "path": "/Lista/node3",
+            "id": "4fbca7c3-b82f-4a1d-9eb3-aba5b9183643"
           }
         ],
-        "numFiles": 0
-      }
+        "numFiles": 2
+      },
+      "path": "/Lista",
+      "id": "e3a55200-7b86-415a-8141-6a39c167acaa"
     },
     {
-      "name": "test",
+      "name": "node1",
       "isDirectory": true,
       "nodes": {
         "directories": [
           {
-            "name": "amor",
+            "name": "node2",
             "isDirectory": true,
             "nodes": {
-              "directories": [
-                {
-                  "name": "tes1",
-                  "isDirectory": true,
-                  "nodes": {
-                    "directories": [
-                      {
-                        "name": "test2",
-                        "isDirectory": true,
-                        "nodes": {
-                          "directories": [],
-                          "numFiles": 2
-                        }
-                      }
-                    ],
-                    "numFiles": 0
-                  }
-                }
-              ],
-              "numFiles": 0
-            }
+              "directories": [],
+              "numFiles": 3
+            },
+            "path": "/node1/node2",
+            "id": "04c49d7b-5cd9-47b5-bad3-1df639976666"
           }
         ],
-        "numFiles": 0
-      }
+        "numFiles": 3
+      },
+      "path": "/node1",
+      "id": "988cb21c-c405-4d35-ad85-07459c81f7fc"
+    },
+    {
+      "name": "node4",
+      "isDirectory": true,
+      "nodes": {
+        "directories": [],
+        "numFiles": 1
+      },
+      "path": "/node4",
+      "id": "f285c981-3785-4feb-91f9-85b50ce2f742"
     }
   ],
-  "numFiles": 0
+  "numFiles": 1
 }
