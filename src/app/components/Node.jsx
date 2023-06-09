@@ -2,7 +2,7 @@
 import React, { useContext } from "react";
 import { usePath } from "../hooks/usePath";
 import { useDirs } from "../hooks/useDirs";
-import { COLORS } from "../constants";
+import { ACTIONS, COLORS, MODES } from "../constants";
 import NodeInsert from "./NodeInsert";
 
 export default function Node({ name, numFiles, numDirs, path, mode, selected, id }) {
@@ -12,13 +12,13 @@ export default function Node({ name, numFiles, numDirs, path, mode, selected, id
   const fnHandleClick = () => {
     fnChangePath(path);
     fnDispatch({
-      type: "selected",
+      type: ACTIONS.select,
       id: id,
     });
   };
-  let sMode = selected ? "selected" : mode;
+  let sMode = selected ? MODES.selected : mode;
   let sDivClass = oColors[sMode];
-  let bDisplay = mode === "display";
+  let bDisplay = mode === MODES.displayed;
   return (
     <div className="flex flex-col">
       <div className="flex gap-2 items-center">
@@ -26,7 +26,7 @@ export default function Node({ name, numFiles, numDirs, path, mode, selected, id
         {bDisplay ? (
           <NodeDisplay numDirs={numDirs} numFiles={numFiles} name={name} />
         ) : (
-          <NodeInsert name={name} id={id} />
+          <NodeInsert name={name} id={id} path={path}/>
         )}
       </div>
     </div>

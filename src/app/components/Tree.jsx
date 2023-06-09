@@ -4,6 +4,7 @@ import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { usePath } from "../hooks/usePath";
 import TreeNodes from "./TreeNodes";
 import { useDirs } from "../hooks/useDirs";
+import { ACTIONS } from "../constants";
 
 export default function Tree() {
   const { path } = usePath();
@@ -11,7 +12,7 @@ export default function Tree() {
   const { dirs: aDirectories, selectedId: sSelected } = state;
   const fnAddDir = () => {
     fnDispatch({
-      type: "inserted",
+      type: ACTIONS.insert,
       path: path,
     });
   };

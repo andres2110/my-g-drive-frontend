@@ -1,57 +1,141 @@
 {
   "directories": [
-    {
-      "name": "Lista",
-      "isDirectory": true,
-      "nodes": {
-        "directories": [
-          {
-            "name": "node3",
-            "isDirectory": true,
-            "nodes": {
+      {
+          "name": "Lista",
+          "isDirectory": true,
+          "nodes": {
+              "directories": [
+                  {
+                      "name": "node3",
+                      "isDirectory": true,
+                      "nodes": {
+                          "directories": [
+                              {
+                                  "name": "node4",
+                                  "isDirectory": true,
+                                  "nodes": {
+                                      "directories": [
+                                          {
+                                              "name": "node1",
+                                              "isDirectory": true,
+                                              "nodes": {
+                                                  "directories": [],
+                                                  "numFiles": 0
+                                              },
+                                              "path": "/Lista/node3/node4/node1",
+                                              "id": "a1a31abc-b5ea-4a28-812b-466351656818"
+                                          },
+                                          {
+                                              "name": "node2",
+                                              "isDirectory": true,
+                                              "nodes": {
+                                                  "directories": [
+                                                      {
+                                                          "name": "node4",
+                                                          "isDirectory": true,
+                                                          "nodes": {
+                                                              "directories": [],
+                                                              "numFiles": 0
+                                                          },
+                                                          "path": "/Lista/node3/node4/node2/node4",
+                                                          "id": "dc2a3130-25bc-4833-a328-3f31c455e0ff"
+                                                      }
+                                                  ],
+                                                  "numFiles": 0
+                                              },
+                                              "path": "/Lista/node3/node4/node2",
+                                              "id": "a51fc384-d9b0-4c78-a626-74e8fe96235c"
+                                          }
+                                      ],
+                                      "numFiles": 0
+                                  },
+                                  "path": "/Lista/node3/node4",
+                                  "id": "224f5df9-284b-4ca9-9eee-122c5744b31f"
+                              },
+                              {
+                                  "name": "node7",
+                                  "isDirectory": true,
+                                  "nodes": {
+                                      "directories": [],
+                                      "numFiles": 0
+                                  },
+                                  "path": "/Lista/node3/node7",
+                                  "id": "5859c3e6-4732-4efd-ab23-db9301517172"
+                              }
+                          ],
+                          "numFiles": 0
+                      },
+                      "path": "/Lista/node3",
+                      "id": "65cf19ba-3e52-45ff-ac64-4e5e3700c8cc"
+                  },
+                  {
+                      "name": "node4",
+                      "isDirectory": true,
+                      "nodes": {
+                          "directories": [],
+                          "numFiles": 0
+                      },
+                      "path": "/Lista/node4",
+                      "id": "07a895aa-76f3-4318-bec1-a14c8d79ef6b"
+                  }
+              ],
+              "numFiles": 0
+          },
+          "path": "/Lista",
+          "id": "e7ef029a-f056-45f3-905c-10dfd7e240c7"
+      },
+      {
+          "name": "node1",
+          "isDirectory": true,
+          "nodes": {
+              "directories": [
+                  {
+                      "name": "node2",
+                      "isDirectory": true,
+                      "nodes": {
+                          "directories": [
+                              {
+                                  "name": "node5",
+                                  "isDirectory": true,
+                                  "nodes": {
+                                      "directories": [],
+                                      "numFiles": 0
+                                  },
+                                  "path": "/node1/node2/node5",
+                                  "id": "b633a64a-da7a-4cfb-b50d-b3b6c48a68d9"
+                              }
+                          ],
+                          "numFiles": 0
+                      },
+                      "path": "/node1/node2",
+                      "id": "f9c1c475-6b11-4a8b-a7a1-448f279fa061"
+                  },
+                  {
+                      "name": "node3",
+                      "isDirectory": true,
+                      "nodes": {
+                          "directories": [],
+                          "numFiles": 0
+                      },
+                      "path": "/node1/node3",
+                      "id": "ce0b1d04-ebb8-479d-ae34-3669e4e08c38"
+                  }
+              ],
+              "numFiles": 0
+          },
+          "path": "/node1",
+          "id": "4440b52e-fb31-4e3e-93ea-457ffab826a5"
+      },
+      {
+          "name": "node4",
+          "isDirectory": true,
+          "nodes": {
               "directories": [],
-              "numFiles": 1
-            },
-            "path": "/Lista/node3",
-            "id": "4fbca7c3-b82f-4a1d-9eb3-aba5b9183643"
-          }
-        ],
-        "numFiles": 2
-      },
-      "path": "/Lista",
-      "id": "e3a55200-7b86-415a-8141-6a39c167acaa"
-    },
-    {
-      "name": "node1",
-      "isDirectory": true,
-      "nodes": {
-        "directories": [
-          {
-            "name": "node2",
-            "isDirectory": true,
-            "nodes": {
-              "directories": [],
-              "numFiles": 3
-            },
-            "path": "/node1/node2",
-            "id": "04c49d7b-5cd9-47b5-bad3-1df639976666"
-          }
-        ],
-        "numFiles": 3
-      },
-      "path": "/node1",
-      "id": "988cb21c-c405-4d35-ad85-07459c81f7fc"
-    },
-    {
-      "name": "node4",
-      "isDirectory": true,
-      "nodes": {
-        "directories": [],
-        "numFiles": 1
-      },
-      "path": "/node4",
-      "id": "f285c981-3785-4feb-91f9-85b50ce2f742"
-    }
+              "numFiles": 0
+          },
+          "path": "/node4",
+          "id": "18ce7ee8-edbf-4ae0-8ab3-9eaeb25cfd29"
+      }
   ],
-  "numFiles": 1
+  "numFiles": 0
 }

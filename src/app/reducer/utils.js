@@ -1,3 +1,5 @@
+import { MODES } from "../constants";
+
 export const fnTransformDirs = (aDirs) => {
     // let aNewNodes = [];
     let aNewDirs = aDirs.map((oDir) => {
@@ -15,7 +17,7 @@ export const fnTransformDirs = (aDirs) => {
         path: oDir.path,
         id: oDir.id,
         nodes: oNewNode.directories,
-        mode: "display",
+        mode: MODES.displayed,
         numFiles: oNewNode.numFiles,
         numDirs: oNewNode.directories.length,
         name: oDir.name
