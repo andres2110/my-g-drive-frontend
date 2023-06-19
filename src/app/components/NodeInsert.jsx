@@ -4,12 +4,14 @@ import { useRef, useState } from "react";
 import { useDirs } from "../hooks/useDirs";
 import { ACTIONS } from "../constants";
 import { usePath } from "../hooks/usePath";
+import { useParams } from "next/navigation";
 
 const NodeInsert = ({ name, id, path }) => {
   const [bShow, setShow] = useState(false);
   const { fnDispatch } = useDirs();
   const { path: currentPath, fnChangePath } = usePath();
   const oInputName = useRef();
+  const { id: sCurrentId } = useParams();
   const fnUpdate = () => {
     let sValue = oInputName.current.value;
     fnDispatch({
@@ -23,9 +25,11 @@ const NodeInsert = ({ name, id, path }) => {
     if (path === currentPath) {
       fnChangePath("");
     }
+    let sId = sCurrentId || "";
     fnDispatch({
       type: ACTIONS.delete,
       id: id,
+      currentId: sId,
     });
   };
 
@@ -41,7 +45,7 @@ const NodeInsert = ({ name, id, path }) => {
             type="text"
             capture
             defaultValue={name}
-            className="rounded-lg w-15 bg-transparent text-[#c1d19c] text-base h-6"
+            className="rounded-lg w-1/2 bg-transparent text-[#c1d19c] text-base h-6"
             ref={oInputName}
             // onBlur={fnUpdate}
           />

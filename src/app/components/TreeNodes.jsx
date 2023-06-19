@@ -44,5 +44,5 @@ export default function TreeNodes({ directories, selectedId }) {
     );
   });
 
-  return <div className="flex flex-col gap-5">{aNodesDirs}</div>;
+  return <div className="flex flex-col gap-5 pl-5">{aNodesDirs}</div>;
 }

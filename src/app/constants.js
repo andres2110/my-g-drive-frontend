@@ -16,5 +16,6 @@ export const ACTIONS = {
   insert: "insert",
   delete: "delete",
   maxNodes: 5,
-  updateName: 'update'
+  updateName: 'update',
+  updateTree: 'tree'
 };
