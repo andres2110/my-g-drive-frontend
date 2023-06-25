@@ -34,9 +34,9 @@ const NodeInsert = ({ name, id, path }) => {
   };
 
   return (
-    <div className="flex gap-2  items-center">
+    <div className="flex gap-2 items-center w-3/5 md:w-1/5">
       {bShow ? (
-        <h5 className=" text-white" onDoubleClick={() => setShow(!bShow)}>
+        <h5 className=" text-white w-full" onDoubleClick={() => setShow(!bShow)}>
           {name}
         </h5>
       ) : (
@@ -45,14 +45,13 @@ const NodeInsert = ({ name, id, path }) => {
             type="text"
             capture
             defaultValue={name}
-            className="rounded-lg w-1/2 bg-transparent text-[#c1d19c] text-base h-6"
+            className="rounded-lg w-full bg-transparent text-[#c1d19c] text-base h-6"
             ref={oInputName}
             // onBlur={fnUpdate}
           />
           <FontAwesomeIcon icon={faCheck} color="#9cd1a9" onClick={fnUpdate} />
-        </>
+        </> 
       )}
-
       <FontAwesomeIcon icon={faTimes} color="red" onClick={fnDelete} />
     </div>
   );

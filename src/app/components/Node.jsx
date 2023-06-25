@@ -5,9 +5,11 @@ import { useDirs } from "../hooks/useDirs";
 import { ACTIONS, COLORS, MODES } from "../constants";
 import NodeInsert from "./NodeInsert";
 import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 export default function Node({ name, numFiles, numDirs, path, mode, selected, id }) {
-  const { fnChangePath } = usePath();
+  const { fnChangePath, fnGoNode } = usePath();
   const { fnDispatch } = useDirs();
   const oRouter = useRouter();
   const oColors = COLORS;
@@ -23,19 +25,24 @@ export default function Node({ name, numFiles, numDirs, path, mode, selected, id
     });
   };
   const fnGoToNode = () => {
-    fnChangePath(path);
+    fnGoNode(path);
+    fnDispatch({
+      type: ACTIONS.select,
+      id: "",
+    });
     oRouter.push(`/${id}`);
   };
 
   return (
     <div className="flex flex-col">
       <div className="flex gap-2 items-center">
-        <div className={sDivClass} onClick={fnHandleClick} onDoubleClick={fnGoToNode}></div>
+        <div className={sDivClass} onClick={fnHandleClick}></div>
         {bDisplay ? (
           <NodeDisplay numDirs={numDirs} numFiles={numFiles} name={name} />
         ) : (
           <NodeInsert name={name} id={id} path={path} />
         )}
+        <FontAwesomeIcon icon={faEye} color="#25cec0" size="xs" onClick={fnGoToNode}/>
       </div>
     </div>
   );
