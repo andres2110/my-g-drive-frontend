@@ -12,20 +12,21 @@ export function PathProvider({ children }) {
         let iIndex = stack.length - 1;
         return stack[iIndex];
       }
+      console.log(sNewPath);
       return sNewPath;
     });
   };
   const fnValidateSelect = (sNewPath) => {
-    setPath((sPath) => {
-      if(sNewPath === sPath) {
-        return sPath;
-      }
-      return sNewPath;
-    })
-  }
+    console.log(sNewPath);
+    setPath(sNewPath);
+  };
+  const fnRefresh = () => {
+    setStack([""]);
+    setPath("");
+  };
   const fnGoNode = (sPath) => {
     setStack((pStack) => {
-      pStack.push(sPath)
+      pStack.push(sPath);
       let iIndex = pStack.length - 1;
       fnValidateSelect(pStack[iIndex]);
       return pStack;
@@ -33,7 +34,7 @@ export function PathProvider({ children }) {
   };
   const fnBackNode = () => {
     setStack((pStack) => {
-      pStack.pop()
+      pStack.pop();
       let iIndex = pStack.length - 1;
       fnValidateSelect(pStack[iIndex]);
       return pStack;
@@ -46,6 +47,7 @@ export function PathProvider({ children }) {
         fnChangePath,
         fnGoNode,
         fnBackNode,
+        fnRefresh,
         stack,
       }}
     >

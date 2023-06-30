@@ -23,15 +23,19 @@ export default function Tree({ first }) {
   };
   const fnGoBack = () => {
     fnBackNode();
-    oRouter.back();
+    fnDispatch({
+      type: ACTIONS.updateTree,
+      id: path,
+    });
+    // oRouter.back();
   };
   return (
     <section className="h-3/6 w-10/12 md:w-1/2 py-5 rounded-sm z-0 bg-[#3F3838]">
-      {!first ? <FontAwesomeIcon icon={faArrowLeft} className="absolute" onClick={fnGoBack} /> : <></>}
+      <FontAwesomeIcon icon={faArrowLeft} className="absolute" onClick={fnGoBack} />
       <TreeNodes directories={aDirectories} selectedId={sSelected} />
       <div className="z-10 flex justify-end">
         <FontAwesomeIcon icon={faCirclePlus} size="2xl" color="#58DE66" onClick={fnAddDir} />
-      </div> 
+      </div>
     </section>
   );
 }

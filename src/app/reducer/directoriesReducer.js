@@ -1,33 +1,52 @@
 import { ACTIONS, MODES } from "../constants";
-import { directories as DIRS } from "../mocks/files.json";
 import { fnTransformDirs } from "./utils";
 import { v4 } from "uuid";
-
-let aDirs = fnTransformDirs(DIRS);
+// import { directories as DIRS } from "../mocks/files.json";
+// let aDirs = fnTransformDirs(DIRS);
 export const initialState = {
   dirs: [],
-  originalDirs: aDirs,
+  // originalDirs: aDirs,
+  originalDirs: [],
   selectedId: "",
   nodesInserted: 0,
+  status: '-',
 };
 export function directoriesReducer(state, action) {
-  const { type, id, path, name, currentId } = action;
+  const { type, id, path, name, currentId, dirs } = action;
   switch (type) {
+    case ACTIONS.dirs_initial:
+      return {
+        ...state,
+        status: MODES.loading,
+      };
+    case ACTIONS.dirs_success: {
+      let aDirs = fnTransformDirs(dirs);
+      return {
+        ...state,
+        originalDirs: aDirs,
+        status: MODES.success,
+      };
+    }
+    case ACTIONS.dirs_error: {
+      return {
+        ...state,
+        status: MODES.error,
+      };
+    }
     case ACTIONS.updateTree:
       let aTree = [];
-      if (path === "") {
-        aTree = structuredClone(state.originalDirs);
-        return {
-          ...state,
-          dirs: aTree,
-        };
-      }
+      // if (path === "") {
+      //   aTree = structuredClone(state.originalDirs);
+      //   return {
+      //     ...state,
+      //     dirs: aTree,
+      //   };
+      // }
       aTree = fnGetTree(id, state.originalDirs);
       return {
         ...state,
         dirs: aTree,
       };
-
     case ACTIONS.select:
       let sId = state.selectedId === id ? "" : id;
       return {
@@ -40,8 +59,8 @@ export function directoriesReducer(state, action) {
           ...state,
         };
       }
-      let sInsertId = state.selectedId === "" ? currentId : state.selectedId;
-      let aInserted = fnInserNode(state.originalDirs, path,sInsertId);
+      let sInsertId = state.selectedId === "" ? currentId : state.selectedId; //Si tengo uno seleccionado, escogo esa, sino es la path actual
+      let aInserted = fnInserNode(state.originalDirs, path, sInsertId);
       let aNewTree = fnGetTree(currentId, aInserted);
       return {
         ...state,
@@ -67,6 +86,7 @@ export function directoriesReducer(state, action) {
 }
 
 const fnGetTree = (sId, aDirs) => {
+  console.log('Update');
   const fnSearchRecursive = (sId, aNodes) => {
     for (let i = 0; i < aNodes.length; i++) {
       const oNode = aNodes[i];
@@ -90,6 +110,7 @@ const fnGetTree = (sId, aDirs) => {
 };
 
 const fnUpdateName = (sId, sName, aDirs) => {
+  //TODO: a primer nivel
   let bUpdate = false;
 
   aDirs.forEach((oDir) => {

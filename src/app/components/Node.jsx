@@ -27,10 +27,10 @@ export default function Node({ name, numFiles, numDirs, path, mode, selected, id
   const fnGoToNode = () => {
     fnGoNode(path);
     fnDispatch({
-      type: ACTIONS.select,
-      id: "",
+      type: ACTIONS.updateTree,
+      id: id,
     });
-    oRouter.push(`/${id}`);
+    // oRouter.push(`/${id}`);
   };
 
   return (
@@ -42,7 +42,7 @@ export default function Node({ name, numFiles, numDirs, path, mode, selected, id
         ) : (
           <NodeInsert name={name} id={id} path={path} />
         )}
-        <FontAwesomeIcon icon={faEye} color="#25cec0" size="xs" onClick={fnGoToNode}/>
+        <FontAwesomeIcon icon={faEye} color="#25cec0" size="xs" onClick={fnGoToNode} />
       </div>
     </div>
   );
