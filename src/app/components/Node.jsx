@@ -4,14 +4,12 @@ import { usePath } from "../hooks/usePath";
 import { useDirs } from "../hooks/useDirs";
 import { ACTIONS, COLORS, MODES } from "../constants";
 import NodeInsert from "./NodeInsert";
-import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 export default function Node({ name, numFiles, numDirs, path, mode, selected, id }) {
   const { fnChangePath, fnGoNode } = usePath();
   const { fnDispatch } = useDirs();
-  const oRouter = useRouter();
   const oColors = COLORS;
   let sMode = selected ? MODES.selected : mode;
   let sDivClass = oColors[sMode];
@@ -30,7 +28,11 @@ export default function Node({ name, numFiles, numDirs, path, mode, selected, id
       type: ACTIONS.updateTree,
       id: id,
     });
-    // oRouter.push(`/${id}`);
+    //Borrar el seleccionado
+    fnDispatch({
+      type: ACTIONS.select,
+      id: "",
+    });
   };
 
   return (

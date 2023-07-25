@@ -4,20 +4,20 @@ import { useRef, useState } from "react";
 import { useDirs } from "../hooks/useDirs";
 import { ACTIONS } from "../constants";
 import { usePath } from "../hooks/usePath";
-import { useParams } from "next/navigation";
 
 const NodeInsert = ({ name, id, path }) => {
   const [bShow, setShow] = useState(false);
   const { fnDispatch } = useDirs();
-  const { path: currentPath, fnChangePath } = usePath();
+  const { path: currentPath,sParentPath, fnChangePath } = usePath();
   const oInputName = useRef();
-  const { id: sCurrentId } = useParams();
   const fnUpdate = () => {
     let sValue = oInputName.current.value;
+    
     fnDispatch({
       type: ACTIONS.updateName,
       id: id,
       name: sValue,
+      currentId: sParentPath
     });
     setShow(true);
   };
@@ -25,11 +25,10 @@ const NodeInsert = ({ name, id, path }) => {
     if (path === currentPath) {
       fnChangePath("");
     }
-    let sId = sCurrentId || "";
     fnDispatch({
       type: ACTIONS.delete,
       id: id,
-      currentId: sId,
+      currentId: sParentPath,
     });
   };
 

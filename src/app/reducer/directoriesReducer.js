@@ -9,10 +9,11 @@ export const initialState = {
   originalDirs: [],
   selectedId: "",
   nodesInserted: 0,
-  status: '-',
+  status: MODES.loading,
+  error: "",
 };
 export function directoriesReducer(state, action) {
-  const { type, id, path, name, currentId, dirs } = action;
+  const { type, id, path, name, currentId, dirs, error } = action;
   switch (type) {
     case ACTIONS.dirs_initial:
       return {
@@ -21,28 +22,25 @@ export function directoriesReducer(state, action) {
       };
     case ACTIONS.dirs_success: {
       let aDirs = fnTransformDirs(dirs);
+      let aInitTree = fnGetTree(currentId, aDirs);
       return {
         ...state,
         originalDirs: aDirs,
+        selectedId: "",
+        dirs: aInitTree,
         status: MODES.success,
+        nodesInserted: 0,
       };
     }
     case ACTIONS.dirs_error: {
       return {
         ...state,
         status: MODES.error,
+        error: error,
       };
     }
     case ACTIONS.updateTree:
-      let aTree = [];
-      // if (path === "") {
-      //   aTree = structuredClone(state.originalDirs);
-      //   return {
-      //     ...state,
-      //     dirs: aTree,
-      //   };
-      // }
-      aTree = fnGetTree(id, state.originalDirs);
+      let aTree = fnGetTree(id, state.originalDirs);
       return {
         ...state,
         dirs: aTree,
@@ -54,9 +52,10 @@ export function directoriesReducer(state, action) {
         selectedId: sId,
       };
     case ACTIONS.insert:
-      if (state.nodesInserted === ACTIONS.maxNodes) {
+      if (state.nodesInserted >= ACTIONS.maxNodes) {
         return {
           ...state,
+          nodesInserted: ACTIONS.maxNodes,
         };
       }
       let sInsertId = state.selectedId === "" ? currentId : state.selectedId; //Si tengo uno seleccionado, escogo esa, sino es la path actual
@@ -71,22 +70,24 @@ export function directoriesReducer(state, action) {
     case ACTIONS.delete:
       let aNewDirs = fnDeleteNode(state.originalDirs, id);
       let newTree = fnGetTree(currentId, aNewDirs);
+      let iNodeInserted = state.nodesInserted === 0 ? 0 : --state.nodesInserted;
       return {
         ...state,
         originalDirs: aNewDirs,
         dirs: newTree,
-        nodesInserted: --state.nodesInserted,
+        nodesInserted: iNodeInserted,
       };
     case ACTIONS.updateName:
-      fnUpdateName(id, name, state.dirs);
+      let aUpdateDirs = fnUpdateName(id, name, state.originalDirs);
       return {
         ...state,
+        originalDirs: aUpdateDirs,
+        dirs: fnGetTree(currentId, aUpdateDirs),
       };
   }
 }
 
 const fnGetTree = (sId, aDirs) => {
-  console.log('Update');
   const fnSearchRecursive = (sId, aNodes) => {
     for (let i = 0; i < aNodes.length; i++) {
       const oNode = aNodes[i];
@@ -111,33 +112,35 @@ const fnGetTree = (sId, aDirs) => {
 
 const fnUpdateName = (sId, sName, aDirs) => {
   //TODO: a primer nivel
-  let bUpdate = false;
+  const fnNewPath = (sPath, sName) => {
+    let aSplit = sPath.split("/");
+    // aSplit = aSplit.slice(1, aSplit.length);
+    // aSplit[aSplit.length - 1] = sName;
+    // let sNewPath = "";
+    // aSplit.forEach((name) => (sNewPath = `${sNewPath}/${name}`));
 
-  aDirs.forEach((oDir) => {
-    if (oDir.id === sId) {
-      oDir.name = sName;
-      oDir.path = sName;
-      bUpdate = true;
-    }
-  });
-  if (bUpdate) {
-    return;
-  }
+    let sNewPath = sPath.replace(aSplit[aSplit.length - 1], sName);
+    return sNewPath;
+  };
 
-  aDirs.forEach((oDir) => {
-    let aNewNodes = oDir?.nodes;
-    aNewNodes = aNewNodes.forEach((oNode) => {
-      if (oNode.id === sId) {
-        oNode.name = sName;
-        let aSplit = oNode.path.split("/");
-        aSplit = aSplit.slice(1, aSplit.length);
-        aSplit[aSplit.length - 1] = sName;
-        let sPath = "";
-        aSplit.forEach((name) => (sPath = `${sPath}/${name}`));
-        oNode.path = sPath;
+  const fnUpdateRecursive = (sId, sName, aDirs) => {
+    for (let i = 0; i < aDirs.length; i++) {
+      const oDir = aDirs[i];
+      if (oDir.id === sId) {
+        let sNewPath = fnNewPath(oDir.path, sName);
+        aDirs[i].path = sNewPath;
+        aDirs[i].name = sName;
+        return true;
       }
-    });
-  });
+      let aNodes = oDir.nodes;
+      if (aNodes.length) {
+        fnUpdateRecursive(sId, sName, aNodes);
+      }
+    }
+  };
+  let aNewDirs = structuredClone(aDirs);
+  fnUpdateRecursive(sId, sName, aNewDirs);
+  return aNewDirs;
 };
 
 const fnInserNode = (aDirs, path, sId) => {
@@ -160,7 +163,7 @@ const fnInserNode = (aDirs, path, sId) => {
   if (path === "") {
     //Primer nivel
     aNewDirs.push({
-      path: "New",
+      path: "/New",
       id: v4(),
       mode: MODES.inserted,
       name: "New",
@@ -169,7 +172,7 @@ const fnInserNode = (aDirs, path, sId) => {
     return aNewDirs;
   }
   let oNode = {
-    path: `${path}/new`,
+    path: `${path}/New`,
     id: v4(),
     mode: MODES.inserted,
     name: "New",

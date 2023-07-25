@@ -1,10 +1,11 @@
-import { createContext, useState, useCallback, useId } from "react";
+import { createContext, useState } from "react";
 
 export const PathContext = createContext(null);
 
 export function PathProvider({ children }) {
   const [path, setPath] = useState("");
   const [stack, setStack] = useState([""]);
+  const sParentPath = stack[stack.length - 1];
 
   const fnChangePath = (sNewPath) => {
     setPath((pPath) => {
@@ -12,33 +13,27 @@ export function PathProvider({ children }) {
         let iIndex = stack.length - 1;
         return stack[iIndex];
       }
-      console.log(sNewPath);
       return sNewPath;
     });
   };
-  const fnValidateSelect = (sNewPath) => {
-    console.log(sNewPath);
-    setPath(sNewPath);
-  };
   const fnRefresh = () => {
-    setStack([""]);
-    setPath("");
+    console.log(sParentPath);
+    setPath(sParentPath);
   };
   const fnGoNode = (sPath) => {
     setStack((pStack) => {
-      pStack.push(sPath);
-      let iIndex = pStack.length - 1;
-      fnValidateSelect(pStack[iIndex]);
+      pStack.push(sPath); //Uso el valor anterior
+      setPath(sPath);
       return pStack;
     });
   };
   const fnBackNode = () => {
-    setStack((pStack) => {
-      pStack.pop();
-      let iIndex = pStack.length - 1;
-      fnValidateSelect(pStack[iIndex]);
-      return pStack;
-    });
+    let pStack = [...stack]; //OJO: estoy mutando porque necesito el valor actual para hacer updateTree
+    pStack.pop();
+    let iIndex = pStack.length - 1;
+    setPath(pStack[iIndex]);
+    setStack(pStack);
+    return pStack[iIndex];
   };
   return (
     <PathContext.Provider
@@ -48,7 +43,8 @@ export function PathProvider({ children }) {
         fnGoNode,
         fnBackNode,
         fnRefresh,
-        stack,
+        sParentPath,
+        stack
       }}
     >
       {children}

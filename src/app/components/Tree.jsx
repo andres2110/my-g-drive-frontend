@@ -5,33 +5,38 @@ import { usePath } from "../hooks/usePath";
 import TreeNodes from "./TreeNodes";
 import { useDirs } from "../hooks/useDirs";
 import { ACTIONS } from "../constants";
-import { useRouter, useParams } from "next/navigation";
 
-export default function Tree({ first }) {
-  const { path, fnBackNode } = usePath();
-  const oRouter = useRouter();
+export default function Tree() {
+  const { path, fnBackNode, sParentPath, stack } = usePath();
   const { state, fnDispatch } = useDirs();
   const { dirs: aDirectories, selectedId: sSelected } = state;
-  const { id } = useParams();
   const fnAddDir = () => {
-    let sId = id || "";
     fnDispatch({
       type: ACTIONS.insert,
       path: path,
-      currentId: sId,
+      currentId: sParentPath,
     });
   };
   const fnGoBack = () => {
-    fnBackNode();
+    let sPath = fnBackNode();
     fnDispatch({
       type: ACTIONS.updateTree,
-      id: path,
+      id: sPath,
     });
-    // oRouter.back();
+    fnDispatch({
+      type: ACTIONS.select,
+      id: "",
+    });
+
   };
   return (
     <section className="h-3/6 w-10/12 md:w-1/2 py-5 rounded-sm z-0 bg-[#3F3838]">
-      <FontAwesomeIcon icon={faArrowLeft} className="absolute" onClick={fnGoBack} />
+      {stack.length > 1 ? (
+        <FontAwesomeIcon icon={faArrowLeft} className="absolute" onClick={fnGoBack} />
+      ) : (
+        <></>
+      )}
+      {/* <FontAwesomeIcon icon={faArrowLeft} className="absolute" onClick={fnGoBack} />  */}
       <TreeNodes directories={aDirectories} selectedId={sSelected} />
       <div className="z-10 flex justify-end">
         <FontAwesomeIcon icon={faCirclePlus} size="2xl" color="#58DE66" onClick={fnAddDir} />

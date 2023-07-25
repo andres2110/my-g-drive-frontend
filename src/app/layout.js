@@ -18,9 +18,6 @@ export default function RootLayout({ children }) {
               <PathContainer />
               {children}
               <FileForm />
-              <section className="bg-[#3F3838] w-45 h-36 mt-4 justify-center items-center flex rounded-full">
-                <p className="text-white"> Grafico del espacio </p>
-              </section>
             </main>
           </PathProvider>
         </DirsProvider>
